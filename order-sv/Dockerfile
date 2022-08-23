@@ -11,16 +11,16 @@ USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS build
 WORKDIR /src
-COPY ["product-sv.csproj", "./"]
-RUN dotnet restore "product-sv.csproj"
+COPY ["order-sv.csproj", "./"]
+RUN dotnet restore "order-sv.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "product-sv.csproj" -c Release -o /app/build
+RUN dotnet build "order-sv.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "product-sv.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "order-sv.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "product-sv.dll"]
+ENTRYPOINT ["dotnet", "order-sv.dll"]

@@ -14,9 +14,9 @@
 			]
 		}
 	},
-	"workspaceFolder": "/workspaces/microservice-basic/product-sv",
+	"workspaceFolder": "/workspaces/microservice-basic/order-sv",
 	"dockerComposeFile": "./docker-compose.yml",
-	"service": "msb-product-sv",
+	"service": "msb-order-sv",
 	"shutdownAction": "stopCompose",
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

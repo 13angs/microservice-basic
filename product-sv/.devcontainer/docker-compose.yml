@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  msb-product-sv:
+    build: 
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+      # Update 'VARIANT' to pick a .NET Core version: 3.1, 6.0
+      # Append -bullseye or -focal to pin to an OS version
+      args:
+        - "VARIANT=6.0-bullseye"
+        - "NODE_VERSION=lts/*"
+    container_name: msb-product-sv-devcon-${OWNER}
+
+    volumes:
+      - ../..:/workspaces/microservice-basic:cache
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    command: sleep infinity

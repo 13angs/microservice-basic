@@ -10,11 +10,10 @@
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				"ms-dotnettools.csharp",
-				"TabNine.tabnine-vscode"
 			]
 		}
 	},
-	"workspaceFolder": "/workspaces/microservice-basic/order-sv",
+	"workspaceFolder": "/workspaces/microservice-basic/product-sv",
 	"dockerComposeFile": "./docker-compose.yml",
 	"service": "msb-product-sv",
 	"shutdownAction": "stopCompose",

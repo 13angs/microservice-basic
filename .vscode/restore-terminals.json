@@ -1,0 +1,38 @@
+{
+    "artificialDelayMilliseconds": 300,
+    "keepExistingTerminalsOpen": false,
+    "runOnStartup": false,
+    "terminals": [
+      {
+        "splitTerminals": [
+          {
+            "name": "main"
+          }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "producer",
+            "commands": ["cd infra/compose/product-sv", "docker compose up"]
+          }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "consumer1",
+            "commands": ["cd infra/compose/order-sv", "docker compose -p consumer1 up"]
+          }
+        ]
+      },
+      {
+        "splitTerminals": [
+          {
+            "name": "consumer2",
+            "commands": ["cd infra/compose/order-sv", "consumer_name=consumer2 docker compose -p consumer2 up"]
+          }
+        ]
+      }
+    ]
+  }

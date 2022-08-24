@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using order_sv.Interfaces;
 using order_sv.Models;
 using order_sv.Services;
+using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,5 +38,18 @@ app.UseAuthorization();
 app.MapControllers();
 
 SeedDb.Populate(app);
+
+var factory = new ConnectionFactory{
+    Uri=new Uri("amqp://guest:guest@msb-rabitmq-management:5672")
+};
+
+using var connection = factory.CreateConnection();
+using var channel = connection.CreateModel();
+
+// QueueConsumer.Consume(channel);
+// DirectExchangeConsumer.Consume(channel);
+// TopicExchangeConsumer.Consume(channel);
+// HeaderExchangeConsumer.Consume(channel);
+FanoutExchangeConsumer.Consume(channel);
 
 app.Run();

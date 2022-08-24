@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using product_sv.DTOs;
 using product_sv.Interfaces;
 using product_sv.Models;
+using RabbitMQ.Client;
 
 namespace product_sv.Services
 {
@@ -23,6 +24,19 @@ namespace product_sv.Services
             IList<ProductModel> models = new List<ProductModel>();
 
             mapper.Map<IEnumerable<Product>, IEnumerable<ProductModel>>(products, models);
+            
+            // start the rabbitmq
+            var factory = new ConnectionFactory{
+                Uri=new Uri("amqp://guest:guest@msb-rabitmq-management:5672")
+            };
+            using var connection = factory.CreateConnection();
+            using var channel = connection.CreateModel();
+
+            // QueueProducer.Publish(channel);
+            // DirectExchangePublisher.Publish(channel);
+            // TopicExchangePublisher.Publish(channel);
+            // HeaderExchangePublisher.Publish(channel);
+            FanoutExchangePublisher.Publish(channel);
 
             return Ok(models);
         }

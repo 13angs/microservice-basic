@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  msb-rabitmq-management:
+    image: rabbitmq:3-management
+    container_name: msb-rabitmq-management
+    hostname: ${hostname}
+    ports:
+      - target: ${management_port}
+        published: ${management_port}
+
+      - target: ${amq_port}
+        published: ${amq_port}
+    
+    networks:
+      - msb-network
+
+networks:
+  msb-network:
+    external: true
+    name: msb-network

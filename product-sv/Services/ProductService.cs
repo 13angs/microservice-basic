@@ -34,7 +34,9 @@ namespace product_sv.Services
 
             // QueueProducer.Publish(channel);
             // DirectExchangePublisher.Publish(channel);
-            TopicExchangePublisher.Publish(channel);
+            // TopicExchangePublisher.Publish(channel);
+            // HeaderExchangePublisher.Publish(channel);
+            FanoutExchangePublisher.Publish(channel);
 
             return Ok(models);
         }

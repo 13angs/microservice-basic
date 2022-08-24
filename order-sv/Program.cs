@@ -48,6 +48,8 @@ using var channel = connection.CreateModel();
 
 // QueueConsumer.Consume(channel);
 // DirectExchangeConsumer.Consume(channel);
-TopicExchangeConsumer.Consume(channel);
+// TopicExchangeConsumer.Consume(channel);
+// HeaderExchangeConsumer.Consume(channel);
+FanoutExchangeConsumer.Consume(channel);
 
 app.Run();

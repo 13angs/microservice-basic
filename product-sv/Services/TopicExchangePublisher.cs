@@ -23,7 +23,7 @@ namespace product_sv.Services
             //     count++;
             //     Thread.Sleep(1000);
             // }
-            var message = new {Name="Producer", Message=$"Producer: {count}"};
+            var message = new {Name="Producer", Message=$"Producer: {count}", ExchangeType="Topic"};
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
             channel.BasicPublish("demo-topic-exchange", "account.update", null, body);
         }

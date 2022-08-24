@@ -4,10 +4,10 @@ using RabbitMQ.Client;
 
 namespace product_sv.Services
 {
-    public static class DirectExchangePublisher
+    public static class FanoutExchangePublisher
     {
         /// <summary>
-        /// Gets or sets the <see cref="DirectExchange"/>.
+        /// Gets or sets the <see cref="fanoutExchange"/>.
         /// </summary>
         public static void Publish(IModel channel)
         {
@@ -15,7 +15,7 @@ namespace product_sv.Services
             {
                 {"x-message-ttl", 30000}
             };
-            channel.ExchangeDeclare("demo-direct-exchange", ExchangeType.Direct, arguments: ttl);
+            channel.ExchangeDeclare("demo-fanout-exchange", ExchangeType.Fanout, arguments: ttl);
             int count = 0;
 
             // while(true)
@@ -23,9 +23,13 @@ namespace product_sv.Services
             //     count++;
             //     Thread.Sleep(1000);
             // }
-            var message = new {Name="Producer", Message=$"Producer: {count}", ExchangeType="Direct"};
+            var message = new {Name="Producer", Message=$"Producer: {count}", ExchangeType="Fanout"};
             var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
-            channel.BasicPublish("demo-direct-exchange", "account.init", null, body);
+
+            var properties = channel.CreateBasicProperties();
+            properties.Headers = new Dictionary<string, object>(){{ "account", "init"}};
+
+            channel.BasicPublish("demo-fanout-exchange", string.Empty, properties, body);
         }
     }
 }

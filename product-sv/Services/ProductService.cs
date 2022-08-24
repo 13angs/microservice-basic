@@ -1,8 +1,11 @@
+using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using product_sv.DTOs;
 using product_sv.Interfaces;
 using product_sv.Models;
+using RabbitMQ.Client;
 
 namespace product_sv.Services
 {
@@ -23,6 +26,25 @@ namespace product_sv.Services
             IList<ProductModel> models = new List<ProductModel>();
 
             mapper.Map<IEnumerable<Product>, IEnumerable<ProductModel>>(products, models);
+            
+            // start the rabbitmq
+            var factory = new ConnectionFactory{
+                Uri=new Uri("amqp://guest:guest@msb-rabitmq-management:5672")
+            };
+
+
+            using var connection = factory.CreateConnection();
+            using var channel = connection.CreateModel();
+            channel.QueueDeclare("demo-queue",
+                durable: true,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null
+            );
+
+            var message = new {Name="Producer", Message="Hello!"};
+            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
+            channel.BasicPublish("", "demo-queue", null, body);
 
             return Ok(models);
         }

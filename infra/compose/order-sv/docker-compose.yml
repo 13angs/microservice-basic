@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  msb-order-sv:
+    image: 13angs/msb-order-sv:latest
+    build: 
+      context: ../../../order-sv
+      dockerfile: Dockerfile
+    container_name: msb-order-sv
+
+    networks:
+      - msb-network
+
+networks:
+  msb-network:
+    external: true
+    name: msb-network

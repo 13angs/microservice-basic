@@ -1,7 +1,5 @@
-using System.Text;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using product_sv.DTOs;
 using product_sv.Interfaces;
 using product_sv.Models;
@@ -31,20 +29,11 @@ namespace product_sv.Services
             var factory = new ConnectionFactory{
                 Uri=new Uri("amqp://guest:guest@msb-rabitmq-management:5672")
             };
-
-
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            channel.QueueDeclare("demo-queue",
-                durable: true,
-                exclusive: false,
-                autoDelete: false,
-                arguments: null
-            );
 
-            var message = new {Name="Producer", Message="Hello!"};
-            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
-            channel.BasicPublish("", "demo-queue", null, body);
+            // QueueProducer.Publish(channel);
+            DirectExchangePublisher.Publish(channel);
 
             return Ok(models);
         }

@@ -1,10 +1,8 @@
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using order_sv.Interfaces;
 using order_sv.Models;
 using order_sv.Services;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,20 +45,8 @@ var factory = new ConnectionFactory{
 
 using var connection = factory.CreateConnection();
 using var channel = connection.CreateModel();
-channel.QueueDeclare("demo-queue",
-    durable: true,
-    exclusive: false,
-    autoDelete: false,
-    arguments: null
-);
 
-var consumer = new EventingBasicConsumer(channel);
-consumer.Received += (sender, e) => {
-    var body = e.Body.ToArray();
-    var message = Encoding.UTF8.GetString(body);
-    Console.WriteLine(message);
-};
-
-channel.BasicConsume("demo-queue", true, consumer);
+// QueueConsumer.Consume(channel);
+DirectExchangeConsumer.Consume(channel);
 
 app.Run();

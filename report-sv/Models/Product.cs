@@ -9,5 +9,14 @@ namespace report_sv.Models
 
         [JsonProperty("name")]
         public string? Name { get; set; }
+
+        [JsonProperty("stock")]
+        public int Stock {get; set;}
+
+        [JsonProperty("description")]
+        public string? Description {get;set ;}
+
+        [JsonProperty("price")]
+        public decimal? Price {get;set;}
     }
 }

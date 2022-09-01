@@ -27,12 +27,12 @@ namespace product_sv.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([FromBody] ProductModel model)
+        public async Task<ActionResult<ProductModel>> Create([FromBody] ProductModel model)
         {
             // insert into database
             // insert into queue
-            publisher.Publish(JsonConvert.SerializeObject(model), "report.product", null);
-            return Ok(model);
+            ActionResult<ProductModel> product = await productService.Create(model);
+            return model;
         }
     }
 }

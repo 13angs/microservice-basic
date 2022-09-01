@@ -54,6 +54,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-SeedDb.Populate(app);
+// SeedDb.Populate(app);
 
 app.Run();

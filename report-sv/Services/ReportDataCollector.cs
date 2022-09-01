@@ -26,21 +26,47 @@ namespace report_sv.Services {
 
         public bool ProcessMessage(string message, IDictionary<string, object> headers)
         {
-            Product? product = JsonConvert.DeserializeObject<Product>(message);
-
-            // Use scoped services within a BackgroundService
-            // https://docs.microsoft.com/en-us/dotnet/core/extensions/scoped-service
-            using (IServiceScope scope = serviceProvider.CreateScope())
+            if(message.Contains("product"))
             {
-                ReportContext context = scope.ServiceProvider.GetRequiredService<ReportContext>();
+                Product? product = JsonConvert.DeserializeObject<Product>(message);
 
-                if(!String.IsNullOrEmpty(product!.Name))
+                // Use scoped services within a BackgroundService
+                // https://docs.microsoft.com/en-us/dotnet/core/extensions/scoped-service
+                using (IServiceScope scope = serviceProvider.CreateScope())
                 {
-                    Console.WriteLine($"Adding {message}");
-                    context.Products.Add(product);
-                    context.SaveChanges();
-                }else{
-                    Console.WriteLine("Failed creating product!");
+                    ReportContext context = scope.ServiceProvider.GetRequiredService<ReportContext>();
+
+                    if(!String.IsNullOrEmpty(product!.ProductName))
+                    {
+                        context.Products.Add(product);
+                        context.SaveChanges();
+                        Console.WriteLine($"Successfully Creating product");
+                    }else{
+                        Console.WriteLine("Failed creating product!");
+                    }
+                }
+
+            }else {
+                Order? order = JsonConvert.DeserializeObject<Order>(message);
+
+                // Use scoped services within a BackgroundService
+                // https://docs.microsoft.com/en-us/dotnet/core/extensions/scoped-service
+                using (IServiceScope scope = serviceProvider.CreateScope())
+                {
+                    ReportContext context = scope.ServiceProvider.GetRequiredService<ReportContext>();
+
+                    if(!String.IsNullOrEmpty(order!.Name))
+                    {
+                        // add order
+                        // remove the product stock
+                        Product? product = context.Products.FirstOrDefault(p => p.ProductName == order.Name);
+                        product!.Stock -= order.Amount;
+                        context.Orders.Add(order);
+                        context.SaveChanges();
+                        Console.WriteLine($"Successfully Creating order");
+                    }else{
+                        Console.WriteLine("Failed creating order!");
+                    }
                 }
             }
 

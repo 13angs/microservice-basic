@@ -6,8 +6,8 @@ namespace product_sv.DTOs
     public class ProductModel
     {
 
-        [JsonProperty("name")]
-        public string? Name { get; set; }
+        [JsonProperty("product_name")]
+        public string? ProductName { get; set; }
 
         [JsonProperty("stock")]
         public int Stock {get; set;}

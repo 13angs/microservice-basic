@@ -7,8 +7,8 @@ namespace report_sv.Models
         [JsonProperty("id")]
         public int Id { get; set; }
 
-        [JsonProperty("name")]
-        public string? Name { get; set; }
+        [JsonProperty("product_name")]
+        public string? ProductName { get; set; }
 
         [JsonProperty("stock")]
         public int Stock {get; set;}

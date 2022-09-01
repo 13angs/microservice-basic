@@ -21,5 +21,12 @@ namespace order_sv.Controllers
             ActionResult<IEnumerable<OrderModel>> models = orderService.Get();
             return models;   
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Create([FromBody] OrderModel model)
+        {
+            ActionResult result = await orderService.Create(model);
+            return result;
+        }
     }
 }

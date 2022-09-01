@@ -1,9 +1,12 @@
 using Newtonsoft.Json;
 
-namespace order_sv.DTOs
+namespace report_sv.Models
 {
-    public class OrderModel 
-    {
+    public class Order{
+
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
         [JsonProperty("name")]
         public string? Name {get; set; }
 

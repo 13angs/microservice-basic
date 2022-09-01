@@ -34,7 +34,7 @@ namespace product_sv.Services
 
         public async Task<ActionResult<ProductModel>> Create(ProductModel model)
         {
-            Product? product = await context.Products.FirstOrDefaultAsync(p => p.Name == model.Name);
+            Product? product = await context.Products.FirstOrDefaultAsync(p => p.ProductName == model.ProductName);
 
             if (product!= null)
             {

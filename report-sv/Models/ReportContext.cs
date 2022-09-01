@@ -9,5 +9,6 @@ namespace report_sv.Models {
         }
 
         public DbSet<Product> Products { get; private set; } = null!;
+        public DbSet<Order> Orders { get; private set; } = null!;
     }
 }

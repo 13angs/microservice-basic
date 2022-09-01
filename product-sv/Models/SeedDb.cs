@@ -15,9 +15,9 @@ namespace product_sv.Models
             {
                 Console.WriteLine("Seeding...");
                 IList<Product> products = new List<Product>(){
-                    new Product{Id=1, Name="Produc1", Stock=50, Description="Product 1", Price=150},
-                    new Product{Id=2, Name="Produc2", Stock=100, Description="Product 2", Price=300},
-                    new Product{Id=3, Name="Produc3", Stock=200, Description="Product 3", Price=450},
+                    new Product{Id=1, ProductName="Produc1", Stock=50, Description="Product 1", Price=150},
+                    new Product{Id=2, ProductName="Produc2", Stock=100, Description="Product 2", Price=300},
+                    new Product{Id=3, ProductName="Produc3", Stock=200, Description="Product 3", Price=450},
                 };
 
                 context.Products.AddRange(products);

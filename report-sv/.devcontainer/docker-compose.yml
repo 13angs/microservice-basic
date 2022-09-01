@@ -18,3 +18,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
     command: sleep infinity
+
+    networks:
+      - msb-network
+
+networks:
+  msb-network:
+    name: msb-network
+    external: true

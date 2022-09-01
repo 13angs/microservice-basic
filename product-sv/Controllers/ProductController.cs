@@ -31,7 +31,7 @@ namespace product_sv.Controllers
         {
             // insert into database
             // insert into queue
-            publisher.Publish(JsonConvert.SerializeObject(model), "report.order", null);
+            publisher.Publish(JsonConvert.SerializeObject(model), "report.product", null);
             return Ok(model);
         }
     }

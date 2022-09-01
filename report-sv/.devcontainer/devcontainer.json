@@ -9,7 +9,7 @@
 		"vscode": {	
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"ms-dotnettools.csharp",
+				"ms-dotnettools.csharp@1.24.4",
 				"TabNine.tabnine-vscode",
 				"EthanSK.restore-terminals"
 			]
